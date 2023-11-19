@@ -3,8 +3,6 @@ from django.contrib import admin
 # Import the Member, Event,Blog and Artist model fom models.py
 from .models import Member,Event,Blog,Artist,Feedback
 
-
-
 # Define a new class that inherits from admin.ModelAdmin
 class MemberAdmin(admin.ModelAdmin):
     # Define the fields to display in the table
