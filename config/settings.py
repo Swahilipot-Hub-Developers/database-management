@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'import_export',
+    'django_admin_logs',
     
     'artists',
     'blogs_and_news',
@@ -128,3 +130,10 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Allow no one to delete the admins logs
+DJANGO_ADMIN_LOGS_DELETABLE=False
+
+
+# View the admin logs in admin page (True)
+DJANGO_ADMIN_LOGS_ENABLED=True
