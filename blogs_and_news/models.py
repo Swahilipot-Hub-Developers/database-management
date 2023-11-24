@@ -5,15 +5,19 @@ from django.contrib.contenttypes.models import ContentType
 
 # User Profile to differentiate a writer and admin with role
 class UserProfile(models.Model):
-    user = models.OneToOneField(User,on_delete=models.CASCADE)
-    role = models.CharField(max_length=50, default='writer') #This will take 'writer' or 'admin'
-    bio = models.TextField(blank=True)
+         ROLE_CHOICES = [
+            ('writer', 'Writer'),
+           
+        ]
+         user = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True,unique=True,verbose_name="User")
+         role = models.CharField(max_length=50,choices=ROLE_CHOICES, default='writer') #This will take 'writer' or 'admin'
+         bio = models.TextField(blank=True)
 
    
 
 # Category model for managing article categories
 class Category(models.Model):
-    name = models.CharField(max_length=99, unique=True)
+    name = models.CharField(max_length=99, unique=True,primary_key=True)
     description = models.TextField(blank=True)
     
    
@@ -29,24 +33,26 @@ class Article(models.Model):
     title = models.CharField(max_length=200)
     content = models.TextField()
     status = models.CharField(max_length=50, choices=STATUS_CHOICES ,default="Pending")
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    writer = models.ForeignKey(UserProfile, on_delete=models.CASCADE,limit_choices_to={'role': 'writer'})
+    category = models.OneToOneField(Category, on_delete=models.CASCADE)
+    writer = models.ForeignKey(User, on_delete=models.CASCADE, limit_choices_to={'userprofile__role': 'writer'})
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(auto_now=True)
+    views = models.PositiveIntegerField(default=0,editable=False)
+    shares = models.PositiveIntegerField(default=0,editable=False)
 
 
     
 
 # ArticleAnalytics  model for storing article analytics data 
-class ArticleAnalytics(models.Model):
-    article = models.ForeignKey(Article,on_delete=models.CASCADE)
+class ArticleAnalytic(models.Model):
+    article = models.ForeignKey(Article, on_delete=models.CASCADE)
     views = models.PositiveIntegerField(default=0)
     shares = models.PositiveIntegerField(default=0)
 
 
 
 class SharedArticle(models.Model):
-    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    article = models.OneToOneField(Article, on_delete=models.CASCADE)
     ip_address = models.GenericIPAddressField()
     shared_at = models.DateTimeField(auto_now_add=True)
 

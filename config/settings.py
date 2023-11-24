@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'django_admin_logs',
     
     'artists',
-    'blogs_and_news',
+    'blogs_and_news.apps.BlogsAndNewsConfig',
     'feedback',
     'members',
     'events',

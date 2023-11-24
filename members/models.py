@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 class Member(models.Model):
     GENDER_CHOICES = [
@@ -17,14 +18,18 @@ class Member(models.Model):
         ('Likoni', 'Likoni')
     ]
 
-    member_id = models.CharField(max_length=20, primary_key=True, unique=True, default='SPH-M0000')
+    member_id = models.CharField(max_length=20, unique=True, default='SPH-M0000')
     name = models.CharField(max_length=100)
     gender = models.CharField(max_length=10, choices=GENDER_CHOICES)
-    year_of_birth = models.IntegerField()
+    year_of_birth = models.PositiveIntegerField(
+        validators=[
+            MinValueValidator(1900),
+            MaxValueValidator(2023)
+        ])
     phone_number = models.CharField(max_length=15)
     email_address = models.EmailField()
     country = models.CharField(max_length=50, default='Kenya')
-    county = models.CharField(max_length=50)
+    county = models.CharField(max_length=50,default='Mombasa')
     sub_county = models.CharField(max_length=50, choices=SUB_COUNTY_CHOICES)
 
     def save(self, *args, **kwargs):
@@ -36,6 +41,7 @@ class Member(models.Model):
                 last_id = 0
             new_id = 'SPH-M{:04d}'.format(last_id + 1)
             self.member_id = new_id
+      
 
         super().save(*args, **kwargs)
 
