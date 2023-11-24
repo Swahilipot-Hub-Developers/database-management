@@ -1,5 +1,14 @@
 from django.contrib import admin
-from .models import Artist, Profile
+from import_export.admin import ImportExportModelAdmin
+from .models import Artist
 
-admin.site.register(Artist)
-admin.site.register(Profile)
+class ArtistAdmin(ImportExportModelAdmin):
+    list_display=('id','user','type','description','skills','photo')
+    skip_unchanged = True  # Skip rows that are already present in the database
+    
+admin.site.register(Artist,ArtistAdmin)
+
+
+
+
+
