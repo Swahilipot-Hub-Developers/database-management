@@ -13,13 +13,16 @@ class UserProfile(models.Model):
          role = models.CharField(max_length=50,choices=ROLE_CHOICES, default='writer') #This will take 'writer' or 'admin'
          bio = models.TextField(blank=True)
 
-   
+         def __str__(self):
+           return self.user
 
 # Category model for managing article categories
 class Category(models.Model):
     name = models.CharField(max_length=99, unique=True,primary_key=True)
     description = models.TextField(blank=True)
     
+    def __str__(self):
+        return self.name
    
 
 # Article model for storing blogs and News article 
@@ -39,7 +42,8 @@ class Article(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     views = models.PositiveIntegerField(default=0,editable=False)
     shares = models.PositiveIntegerField(default=0,editable=False)
-
+    def __str__(self):
+        return self.title
 
     
 
@@ -49,6 +53,8 @@ class ArticleAnalytic(models.Model):
     views = models.PositiveIntegerField(default=0)
     shares = models.PositiveIntegerField(default=0)
 
+    def __str__(self):
+        return self.article
 
 
 class SharedArticle(models.Model):
@@ -56,4 +62,5 @@ class SharedArticle(models.Model):
     ip_address = models.GenericIPAddressField()
     shared_at = models.DateTimeField(auto_now_add=True)
 
- 
+    def __str__(self):
+        return self.article

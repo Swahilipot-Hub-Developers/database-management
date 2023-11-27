@@ -12,4 +12,5 @@ class Feedback(models.Model):
     attachment = models.FileField(upload_to='feedback_attchments/', null=True, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True, editable=False)
 
-
+    def __str__(self):
+        return self.category

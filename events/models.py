@@ -25,7 +25,8 @@ class Event(models.Model):
     def total_tickets(self):
         return self.event_tickets.aggregate(total_quantity=models.Sum('quantity'))['total_quantity'] or 0
     
-
+    def __str__(self):
+        return self.name
 
 class EventTicket(models.Model):
     TICKET_TYPES = [
@@ -73,6 +74,8 @@ class EventTicket(models.Model):
                     break
 
         super(EventTicket, self).save(*args, **kwargs)
+        def __str__(self):
+         return self.ticket_no
 
 @receiver(post_save, sender=EventTicket)
 @receiver(post_delete, sender=EventTicket)
