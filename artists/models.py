@@ -10,4 +10,7 @@ class Artist(models.Model):
     skills = models.CharField(max_length=64)
     photo = models.ImageField(upload_to='images/', null=True, blank=True)
 
+    def __str__(self):
+        return self.user.user
+
 
