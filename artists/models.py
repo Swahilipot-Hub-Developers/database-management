@@ -11,6 +11,6 @@ class Artist(models.Model):
     photo = models.ImageField(upload_to='images/', null=True, blank=True)
 
     def __str__(self):
-        return self.user.user
+        return f"Artist: {self.user.username}"
 
 
