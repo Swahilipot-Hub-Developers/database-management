@@ -12,17 +12,17 @@ class UserProfile(models.Model):
          user = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True,unique=True,verbose_name="User")
          role = models.CharField(max_length=50,choices=ROLE_CHOICES, default='writer') #This will take 'writer' or 'admin'
          bio = models.TextField(blank=True)
-
          def __str__(self):
-           return self.user
+            return str(self.user)
+        
 
 # Category model for managing article categories
 class Category(models.Model):
     name = models.CharField(max_length=99, unique=True,primary_key=True)
     description = models.TextField(blank=True)
-    
     def __str__(self):
-        return self.name
+           return self.name
+    
    
 
 # Article model for storing blogs and News article 
@@ -44,7 +44,6 @@ class Article(models.Model):
     shares = models.PositiveIntegerField(default=0,editable=False)
     def __str__(self):
         return self.title
-
     
 
 # ArticleAnalytics  model for storing article analytics data 
@@ -54,13 +53,12 @@ class ArticleAnalytic(models.Model):
     shares = models.PositiveIntegerField(default=0)
 
     def __str__(self):
-        return self.article
+        return self.article.title
 
 
 class SharedArticle(models.Model):
     article = models.OneToOneField(Article, on_delete=models.CASCADE)
-    ip_address = models.GenericIPAddressField()
     shared_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.article
+        return self.article.title

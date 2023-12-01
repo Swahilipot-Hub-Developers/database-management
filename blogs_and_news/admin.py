@@ -36,7 +36,7 @@ admin.site.register(ArticleAnalytic,ArticleAnalyticsAdmin)
 
 class SharedArticleAdmin(ImportExportModelAdmin):
     # Define the fields to display in the table
-    list_display = ('id','article','ip_address','shared_at')
+    list_display = ('id','article','shared_at')
     skip_unchanged = True  # Skip rows that are already present in the database
 # Register the SharedArticle model with the SharedArticleAdmin class
 admin.site.register(SharedArticle,SharedArticleAdmin)
